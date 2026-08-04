@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import SpotifyEmbed from '../components/SpotifyEmbed.astro';
+import AppleEmbed from '../components/AppleEmbed.astro';
 import KeepsmybagBanner from '../components/KeepsmybagBanner.astro';
 
 const istanbulPosts = (
@@ -96,12 +97,11 @@ const turkeyPosts = (
         <p class="eyebrow">Podcast</p>
         <h2>Same guides, in your ears.</h2>
         <p>Every episode runs 10 minutes. Listen on the road, then come back here for the full detail.</p>
-        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">
-          Apple Podcasts
-        </a>
+        <a class="btn btn-outline" href="/podcast">All Ways to Listen →</a>
       </div>
       <div class="podcast-player">
         <SpotifyEmbed embedUrl="https://open.spotify.com/embed/show/0340QAelnsERPiwoQESar3" />
+        <AppleEmbed embedUrl="https://embed.podcasts.apple.com/us/podcast/istanbul-unpacked/id6797918576" />
       </div>
     </div>
   </section>
@@ -209,6 +209,11 @@ const turkeyPosts = (
   }
   .podcast-copy p:not(.eyebrow) {
     color: var(--color-text-muted);
+  }
+  .podcast-player {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
   .podcast-copy .btn-outline {
     margin-top: 0.5rem;

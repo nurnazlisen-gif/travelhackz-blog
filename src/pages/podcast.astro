@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SpotifyEmbed from '../components/SpotifyEmbed.astro';
+import AppleEmbed from '../components/AppleEmbed.astro';
 ---
 
 <BaseLayout
@@ -17,14 +18,15 @@ import SpotifyEmbed from '../components/SpotifyEmbed.astro';
   </section>
 
   <section class="container listen-section">
-    <div class="listen-card">
-      <div>
-        <p class="eyebrow">Listen</p>
-        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">
-          Apple Podcasts
-        </a>
+    <div class="listen-grid">
+      <div class="listen-col">
+        <p class="eyebrow">Spotify</p>
+        <SpotifyEmbed embedUrl="https://open.spotify.com/embed/show/0340QAelnsERPiwoQESar3" />
       </div>
-      <SpotifyEmbed embedUrl="https://open.spotify.com/embed/show/0340QAelnsERPiwoQESar3" />
+      <div class="listen-col">
+        <p class="eyebrow">Apple Podcasts</p>
+        <AppleEmbed embedUrl="https://embed.podcasts.apple.com/us/podcast/istanbul-unpacked/id6797918576" />
+      </div>
     </div>
   </section>
 
@@ -55,18 +57,22 @@ import SpotifyEmbed from '../components/SpotifyEmbed.astro';
   .listen-section {
     padding: 1.5rem 0;
   }
-  .listen-card {
+  .listen-grid {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .listen-col {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 1.6rem 1.8rem;
+    padding: 1.3rem;
+  }
+  .listen-col .eyebrow {
+    margin-bottom: 0.8rem;
   }
   @media (max-width: 640px) {
-    .listen-card {
+    .listen-grid {
       grid-template-columns: 1fr;
     }
   }
