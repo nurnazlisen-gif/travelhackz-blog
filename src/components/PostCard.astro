@@ -1,9 +1,12 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Props {
   slug: string;
   title: string;
   description: string;
-  heroImage: string;
+  heroImage: ImageMetadata;
   heroImageAlt: string;
   heroLabel?: string;
   episode?: number;
@@ -11,15 +14,11 @@ interface Props {
 }
 
 const { slug, title, description, heroImage, heroImageAlt, heroLabel, episode, destination } = Astro.props;
-
-// Cards render small (~280px) — request a smaller version from Wikimedia's
-// resizing service instead of shipping the same 1600px file used in hero banners.
-const thumbnailSrc = heroImage.replace(/width=\d+/, 'width=480');
 ---
 
 <a href={`/blog/${slug}`} class="card">
   <div class="card-hero photo-cover">
-    <img src={thumbnailSrc} alt={heroImageAlt} loading="lazy" decoding="async" width="480" height="360" />
+    <Image src={heroImage} alt={heroImageAlt} width={480} loading="lazy" />
     {episode && <span class="card-episode">Episode {episode}</span>}
     <span class="card-hero-label">{heroLabel ?? destination}</span>
   </div>

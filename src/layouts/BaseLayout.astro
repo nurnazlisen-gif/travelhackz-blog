@@ -2,23 +2,38 @@
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Analytics from '@vercel/analytics/astro';
+import { getImage } from 'astro:assets';
+import defaultOgImageSrc from '../images/blog/istanbul-skyline-bosphorus-aerial-view.jpg';
 import '../styles/global.css';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   title: string;
   description: string;
-  image?: string;
+  image?: ImageMetadata | string;
   type?: 'website' | 'article';
 }
 
-const DEFAULT_IMAGE =
-  'https://commons.wikimedia.org/wiki/Special:FilePath/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg?width=1200';
+const { title, description, image, type = 'website' } = Astro.props;
 
-const { title, description, image = DEFAULT_IMAGE, type = 'website' } = Astro.props;
+let resolvedImagePath: string;
+if (image && typeof image !== 'string') {
+  const optimized = await getImage({ src: image, width: 1200 });
+  resolvedImagePath = optimized.src;
+} else if (image) {
+  resolvedImagePath = image;
+} else {
+  const optimizedDefault = await getImage({ src: defaultOgImageSrc, width: 1200 });
+  resolvedImagePath = optimizedDefault.src;
+}
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const imageURL = new URL(image, Astro.site);
+const imageURL = new URL(resolvedImagePath, Astro.site);
 const siteName = 'TravelHackz';
-const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const suffixed = `${title} | ${siteName}`;
+// Only brand-suffix short titles — appending " | TravelHackz" to an
+// already-long post title just pushes it past Google's ~60-char SERP cutoff.
+const fullTitle = title.includes(siteName) ? title : suffixed.length <= 60 ? suffixed : title;
 ---
 
 <!doctype html>

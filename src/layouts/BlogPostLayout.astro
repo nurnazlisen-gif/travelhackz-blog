@@ -3,6 +3,8 @@ import BaseLayout from './BaseLayout.astro';
 import FaqSection from '../components/FaqSection.astro';
 import CtaBox from '../components/CtaBox.astro';
 import ShareButtons from '../components/ShareButtons.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   post: {
@@ -17,7 +19,7 @@ interface Props {
       destination: string;
       primaryKeyword: string;
       secondaryKeywords: string[];
-      heroImage: string;
+      heroImage: ImageMetadata;
       heroImageAlt: string;
       heroImageCredit?: string;
       heroLabel?: string;
@@ -63,7 +65,7 @@ const jsonLd = {
   </Fragment>
 
   <div class="post-hero photo-cover">
-    <img src={heroImage} alt={heroImageAlt} />
+    <Image src={heroImage} alt={heroImageAlt} width={1600} />
     <div class="container post-hero-inner">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a> / <a href="/blog">Blog</a>

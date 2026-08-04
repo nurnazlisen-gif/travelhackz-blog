@@ -1,57 +1,68 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+import istanbulSkyline from '../images/blog/istanbul-skyline-bosphorus-aerial-view.jpg';
+import sultanahmetSunset from '../images/blog/blue-mosque-hagia-sophia-sunset-sultanahmet.jpg';
+import bosphorusFerry from '../images/blog/bosphorus-ferry-istanbul.jpg';
+import goldenHorn from '../images/blog/golden-horn-sunset-galata-bridge-istanbul.jpg';
+import balikEkmek from '../images/blog/balik-ekmek-istanbul-street-food.jpg';
+import grandBazaar from '../images/blog/grand-bazaar-istanbul-interior.jpg';
+import nightFishing from '../images/blog/galata-bridge-night-fishermen-istanbul.jpg';
+import buyukadaCarriages from '../images/blog/buyukada-horse-carriage-princes-islands.jpg';
+import istanbulAirport from '../images/blog/istanbul-airport-arrivals-hall.jpg';
 
 const photos = [
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg?width=480',
+    src: istanbulSkyline,
     alt: "Wide aerial view of Istanbul's historic peninsula with domed mosques beside the Bosphorus and the modern skyline beyond",
     caption: 'Istanbul skyline',
     credit: 'Hunanuk / Wikimedia Commons (CC0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sultan_Ahmed_Mosque_and_Hagia_Sophia_by_sun_down.JPG?width=480',
+    src: sultanahmetSunset,
     alt: 'Silhouettes of the Blue Mosque and Hagia Sophia domes and minarets against an orange sunset sky',
     caption: 'Sultanahmet at sunset',
     credit: 'Dickelbers / Wikimedia Commons (CC BY-SA 3.0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_Bosphorus_ferry.jpg?width=480',
+    src: bosphorusFerry,
     alt: 'A passenger ferry crossing the Bosphorus strait in Istanbul',
     caption: 'Bosphorus ferry',
     credit: 'John Lubbock / Wikimedia Commons (CC BY-SA 3.0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_over_Istanbul_from_the_Galata_Bridge.jpg?width=480',
+    src: goldenHorn,
     alt: 'Golden-hour view over the Golden Horn from Galata Bridge with the Fatih Mosque in the distance',
     caption: 'Golden Horn, golden hour',
     credit: 'Joseph Kranak / Wikimedia Commons (CC BY 2.0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Balik_ekmek_Galata_Bridge.JPG?width=480',
+    src: balikEkmek,
     alt: 'A grilled fish sandwich (balık ekmek) served from a vendor boat near Galata Bridge',
     caption: 'Balık ekmek at Eminönü',
     credit: 'Benreis / Wikimedia Commons (CC BY 3.0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_asv2021-11_img43_Grand_Bazaar.jpg?width=480',
+    src: grandBazaar,
     alt: "A vaulted stone corridor lined with shops inside Istanbul's Grand Bazaar",
     caption: 'Inside the Grand Bazaar',
     credit: 'A.Savin / Wikimedia Commons (Free Art License)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_by_Night_-_2014.10.23_(58).JPG?width=480',
+    src: nightFishing,
     alt: "Fishermen silhouetted along Galata Bridge's railing at night with city lights behind them",
     caption: 'Night fishing on Galata Bridge',
     credit: 'Derzsi Elekes Andor / Wikimedia Commons (CC BY-SA 4.0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Carriages_in_Bujukada.jpg?width=480',
+    src: buyukadaCarriages,
     alt: 'Horse-drawn carriages (faytons) lined up on a street in Büyükada',
     caption: 'Horse carriages on Büyükada',
     credit: 'Dada / Wikimedia Commons (CC BY-SA 4.0)',
   },
   {
-    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_Airport_inside_hall.jpg?width=480',
+    src: istanbulAirport,
     alt: "Wide interior hall of Istanbul Airport's departure area with high ceilings",
     caption: 'Istanbul Airport',
     credit: 'Niels Elgaard Larsen / Wikimedia Commons (CC BY-SA 4.0)',
@@ -73,7 +84,7 @@ const photos = [
     {photos.map((photo) => (
       <figure class="gallery-item">
         <div class="gallery-photo">
-          <img src={photo.src} alt={photo.alt} loading="lazy" />
+          <Image src={photo.src} alt={photo.alt} width={480} loading="lazy" />
         </div>
         <figcaption>
           <span class="caption-title">{photo.caption}</span>
@@ -109,13 +120,13 @@ const photos = [
     overflow: hidden;
     background: var(--color-bg-alt);
   }
-  .gallery-photo img {
+  .gallery-photo :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.25s ease;
   }
-  .gallery-item:hover .gallery-photo img {
+  .gallery-item:hover .gallery-photo :global(img) {
     transform: scale(1.04);
   }
   figcaption {
