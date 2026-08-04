@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SpotifyEmbed from '../components/SpotifyEmbed.astro';
 
 const posts = (await getCollection('blog', ({ data }) => data.series === 'Istanbul Unpacked' && !data.draft)).sort(
   (a, b) => (a.data.episode ?? 0) - (b.data.episode ?? 0)
@@ -11,9 +12,13 @@ const posts = (await getCollection('blog', ({ data }) => data.series === 'Istanb
   title="Istanbul Unpacked — The Full 8-Episode Series"
   description="Every episode of the Istanbul Unpacked podcast, written out in full: arrival to last day, budget to itineraries."
 >
-  <section class="hub-hero gradient-bosphorus">
-    <div class="container">
-      <p class="eyebrow" style="color:#dceae7">Podcast Series</p>
+  <section class="hub-hero photo-cover">
+    <img
+      src="https://commons.wikimedia.org/wiki/Special:FilePath/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg?width=1600"
+      alt="Wide aerial view of Istanbul's historic peninsula with domed mosques beside the Bosphorus and the modern skyline beyond"
+    />
+    <div class="container hub-hero-inner">
+      <p class="eyebrow" style="color:#fff">Podcast Series</p>
       <h1>Istanbul Unpacked</h1>
       <p class="hub-desc">
         The full written guides behind our 8-episode, 10-minutes-per-episode podcast for
@@ -21,10 +26,19 @@ const posts = (await getCollection('blog', ({ data }) => data.series === 'Istanb
         between Istanbul's two continents, and how to win your last day — everything you need
         to actually live the city, not just visit it.
       </p>
-      <div class="hub-actions">
-        <a class="btn" href="https://open.spotify.com" target="_blank" rel="noopener">Listen on Spotify</a>
-        <a class="btn btn-outline-white" href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a>
+    </div>
+    <p class="hero-credit">Photo by Hunanuk / Wikimedia Commons (CC0)</p>
+  </section>
+
+  <section class="container listen-section">
+    <div class="listen-card">
+      <div>
+        <p class="eyebrow">Listen</p>
+        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">
+          Apple Podcasts
+        </a>
       </div>
+      <SpotifyEmbed />
     </div>
   </section>
 
@@ -50,33 +64,47 @@ const posts = (await getCollection('blog', ({ data }) => data.series === 'Istanb
   .hub-hero {
     color: #fff;
     padding: 4rem 0;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+  }
+  .hub-hero-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .hero-credit {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 1.2rem;
+    font-size: 0.68rem;
+    color: #fff;
+    opacity: 0.7;
+    margin: 0;
+    z-index: 1;
   }
   .hub-desc {
     max-width: 65ch;
     font-size: 1.1rem;
-    opacity: 0.92;
+    opacity: 0.95;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   }
-  .hub-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
+  .listen-section {
+    padding: 2rem 0 1rem;
   }
-  .btn-outline-white {
-    background: transparent;
-    color: #fff;
-    border: 1.5px solid #fff;
-    display: inline-flex;
+  .listen-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
     align-items: center;
-    padding: 0.75em 1.4em;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.95rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
   }
-  .btn-outline-white:hover {
-    background: #fff;
-    color: var(--color-secondary);
-    text-decoration: none;
+  @media (max-width: 640px) {
+    .listen-card {
+      grid-template-columns: 1fr;
+    }
   }
   .episode-list {
     padding: 3rem 0 4rem;

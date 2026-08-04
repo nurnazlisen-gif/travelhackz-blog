@@ -13,7 +13,9 @@ const blog = defineCollection({
     destination: z.string(),
     primaryKeyword: z.string(),
     secondaryKeywords: z.array(z.string()).default([]),
-    heroGradient: z.string().default('gradient-sunset'),
+    heroImage: z.string(),
+    heroImageAlt: z.string(),
+    heroImageCredit: z.string().optional(),
     heroLabel: z.string().optional(),
     faq: z
       .array(

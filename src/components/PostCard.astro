@@ -3,17 +3,19 @@ interface Props {
   slug: string;
   title: string;
   description: string;
-  heroGradient: string;
+  heroImage: string;
+  heroImageAlt: string;
   heroLabel?: string;
   episode?: number;
   destination: string;
 }
 
-const { slug, title, description, heroGradient, heroLabel, episode, destination } = Astro.props;
+const { slug, title, description, heroImage, heroImageAlt, heroLabel, episode, destination } = Astro.props;
 ---
 
 <a href={`/blog/${slug}`} class="card">
-  <div class={`card-hero ${heroGradient}`}>
+  <div class="card-hero photo-cover">
+    <img src={heroImage} alt={heroImageAlt} loading="lazy" />
     {episode && <span class="card-episode">Episode {episode}</span>}
     <span class="card-hero-label">{heroLabel ?? destination}</span>
   </div>
@@ -40,16 +42,16 @@ const { slug, title, description, heroGradient, heroLabel, episode, destination 
   .card:hover {
     text-decoration: none;
     transform: translateY(-3px);
-    box-shadow: 0 12px 24px -12px rgba(36, 28, 21, 0.25);
+    box-shadow: 0 12px 24px -12px rgba(36, 28, 21, 0.2);
   }
   .card-hero {
-    height: 150px;
-    position: relative;
+    height: 160px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 0.9rem 1rem;
     color: #fff;
+    z-index: 0;
   }
   .card-episode {
     position: absolute;
@@ -59,15 +61,18 @@ const { slug, title, description, heroGradient, heroLabel, episode, destination 
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    background: rgba(0, 0, 0, 0.28);
+    background: rgba(0, 0, 0, 0.35);
     padding: 0.25em 0.6em;
     border-radius: 999px;
+    z-index: 1;
   }
   .card-hero-label {
     font-family: var(--font-serif);
     font-weight: 600;
     font-size: 1.05rem;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    position: relative;
+    z-index: 1;
   }
   .card-body {
     padding: 1.2rem 1.3rem 1.4rem;

@@ -2,27 +2,31 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
+import SpotifyEmbed from '../components/SpotifyEmbed.astro';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => (a.data.episode ?? 99) - (b.data.episode ?? 99)
-);
-const featured = posts.slice(0, 6);
+const istanbulPosts = (
+  await getCollection('blog', ({ data }) => data.series === 'Istanbul Unpacked' && !data.draft)
+).sort((a, b) => (a.data.episode ?? 0) - (b.data.episode ?? 0));
+
+const turkeyPosts = (
+  await getCollection('blog', ({ data }) => !data.series && !data.draft)
+).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <BaseLayout
   title="TravelHackz — No-Fluff Travel Guides"
-  description="Travel guides built on real routes, real timing and real prices. Starting with the Istanbul Unpacked series."
+  description="Travel guides built on real routes, real timing and real prices, across Istanbul and the rest of Turkey."
 >
   <section class="hero">
     <div class="container hero-inner">
       <p class="eyebrow">Welcome to TravelHackz</p>
       <h1>No-fluff travel guides, timed to the hour.</h1>
       <p class="hero-desc">
-        Real routes, real timing and real prices instead of generic advice. We're starting with{' '}
-        <strong>Istanbul Unpacked</strong> — the written companion to our 8-episode podcast.
+        Real routes, real timing and real prices instead of generic advice — covering{' '}
+        <strong>Istanbul</strong> and the rest of <strong>Turkey</strong>.
       </p>
       <div class="hero-actions">
-        <a class="btn" href="/istanbul-unpacked">Explore the Istanbul Unpacked Series</a>
+        <a class="btn" href="/istanbul-unpacked">Istanbul Unpacked Series</a>
         <a class="btn btn-outline" href="/blog">All Posts</a>
       </div>
     </div>
@@ -30,16 +34,20 @@ const featured = posts.slice(0, 6);
 
   <section class="container featured">
     <div class="section-heading">
-      <h2>Featured Posts</h2>
-      <a href="/blog">See all →</a>
+      <div>
+        <p class="eyebrow">Podcast Series</p>
+        <h2>Istanbul Unpacked</h2>
+      </div>
+      <a href="/istanbul-unpacked">See the full series →</a>
     </div>
     <div class="grid">
-      {featured.map((post) => (
+      {istanbulPosts.slice(0, 3).map((post) => (
         <PostCard
           slug={post.id}
           title={post.data.title}
           description={post.data.description}
-          heroGradient={post.data.heroGradient}
+          heroImage={post.data.heroImage}
+          heroImageAlt={post.data.heroImageAlt}
           heroLabel={post.data.heroLabel}
           episode={post.data.episode}
           destination={post.data.destination}
@@ -48,16 +56,42 @@ const featured = posts.slice(0, 6);
     </div>
   </section>
 
-  <section class="podcast-strip">
-    <div class="container podcast-inner">
+  <section class="container featured">
+    <div class="section-heading">
       <div>
+        <p class="eyebrow">More Destinations</p>
+        <h2>Beyond Istanbul</h2>
+      </div>
+      <a href="/blog">See all posts →</a>
+    </div>
+    <div class="grid">
+      {turkeyPosts.map((post) => (
+        <PostCard
+          slug={post.id}
+          title={post.data.title}
+          description={post.data.description}
+          heroImage={post.data.heroImage}
+          heroImageAlt={post.data.heroImageAlt}
+          heroLabel={post.data.heroLabel}
+          episode={post.data.episode}
+          destination={post.data.destination}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="container podcast-section">
+    <div class="podcast-card">
+      <div class="podcast-copy">
         <p class="eyebrow">Podcast</p>
         <h2>Same guides, in your ears.</h2>
         <p>Every episode runs 10 minutes. Listen on the road, then come back here for the full detail.</p>
+        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">
+          Apple Podcasts
+        </a>
       </div>
-      <div class="podcast-links">
-        <a class="btn btn-outline" href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a>
-        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a>
+      <div class="podcast-player">
+        <SpotifyEmbed />
       </div>
     </div>
   </section>
@@ -65,8 +99,7 @@ const featured = posts.slice(0, 6);
 
 <style>
   .hero {
-    background: linear-gradient(180deg, var(--color-bg-alt), var(--color-bg));
-    padding: 4.5rem 0 3.5rem;
+    padding: 4rem 0 3rem;
     border-bottom: 1px solid var(--color-border);
   }
   .hero-inner {
@@ -88,60 +121,51 @@ const featured = posts.slice(0, 6);
     flex-wrap: wrap;
   }
   .featured {
-    padding: 4rem 0 2rem;
+    padding: 3rem 0 1rem;
   }
   .section-heading {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
   .section-heading h2 {
-    margin: 0;
+    margin: 0.2rem 0 0;
   }
   .section-heading a {
     font-weight: 700;
     font-size: 0.9rem;
+    white-space: nowrap;
   }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
   }
-  .podcast-strip {
-    background: var(--color-secondary);
-    color: #fff;
-    margin-top: 3rem;
+  .podcast-section {
+    padding: 2rem 0 4rem;
   }
-  .podcast-inner {
-    display: flex;
-    justify-content: space-between;
+  .podcast-card {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2.5rem;
     align-items: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    padding: 3rem 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2.2rem;
   }
-  .podcast-inner .eyebrow {
-    color: var(--color-secondary-light);
+  .podcast-copy p:not(.eyebrow) {
+    color: var(--color-text-muted);
   }
-  .podcast-inner h2 {
-    margin: 0.3rem 0 0.6rem;
+  .podcast-copy .btn-outline {
+    margin-top: 0.5rem;
   }
-  .podcast-inner p {
-    margin: 0;
-    max-width: 46ch;
-    opacity: 0.9;
-  }
-  .podcast-links {
-    display: flex;
-    gap: 1rem;
-  }
-  .podcast-links .btn-outline {
-    color: #fff;
-    border-color: #fff;
-  }
-  .podcast-links .btn-outline:hover {
-    background: #fff;
-    color: var(--color-secondary);
+  @media (max-width: 720px) {
+    .podcast-card {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

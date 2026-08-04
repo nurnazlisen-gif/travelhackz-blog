@@ -16,7 +16,9 @@ interface Props {
       destination: string;
       primaryKeyword: string;
       secondaryKeywords: string[];
-      heroGradient: string;
+      heroImage: string;
+      heroImageAlt: string;
+      heroImageCredit?: string;
       heroLabel?: string;
       faq: { question: string; answer: string }[];
     };
@@ -26,8 +28,19 @@ interface Props {
 }
 
 const { post, prevPost = null, nextPost = null } = Astro.props;
-const { title, description, pubDate, updatedDate, series, episode, destination, heroGradient, heroLabel, faq } =
-  post.data;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  series,
+  episode,
+  destination,
+  heroImage,
+  heroImageAlt,
+  heroImageCredit,
+  faq,
+} = post.data;
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
@@ -48,7 +61,8 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </Fragment>
 
-  <div class={`post-hero ${heroGradient}`}>
+  <div class="post-hero photo-cover">
+    <img src={heroImage} alt={heroImageAlt} />
     <div class="container post-hero-inner">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a> / <a href="/blog">Blog</a>
@@ -61,6 +75,7 @@ const jsonLd = {
         {destination} · {dateFormatter.format(pubDate)}
       </p>
     </div>
+    {heroImageCredit && <p class="hero-credit">{heroImageCredit}</p>}
   </div>
 
   <article class="container post-body">
@@ -73,21 +88,23 @@ const jsonLd = {
       linkText="Learn about luggage delivery"
     />
 
-    <p class="podcast-note">
-      🎧 This post is the written companion to {episode ? `Episode ${episode}` : 'an episode'} of <strong>Istanbul Unpacked</strong>. Find the podcast on Spotify and Apple Podcasts.
-    </p>
+    {series && (
+      <p class="podcast-note">
+        🎧 This post is the written companion to {episode ? `Episode ${episode}` : 'an episode'} of <strong>{series}</strong>. Find the podcast on Spotify and Apple Podcasts.
+      </p>
+    )}
 
     {(prevPost || nextPost) && (
       <nav class="series-nav" aria-label="Series navigation">
         {prevPost ? (
           <a class="series-nav-link" href={`/blog/${prevPost.id}`}>
-            <span>← Previous Episode</span>
+            <span>← Previous</span>
             <strong>{prevPost.data.title}</strong>
           </a>
         ) : <span />}
         {nextPost ? (
           <a class="series-nav-link align-right" href={`/blog/${nextPost.id}`}>
-            <span>Next Episode →</span>
+            <span>Next →</span>
             <strong>{nextPost.data.title}</strong>
           </a>
         ) : <span />}
@@ -99,10 +116,24 @@ const jsonLd = {
 <style>
   .post-hero {
     color: #fff;
-    padding: 3rem 0 2.5rem;
+    padding: 3.5rem 0 2.5rem;
+    min-height: 380px;
+    display: flex;
+    align-items: flex-end;
   }
   .post-hero-inner {
     max-width: 760px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-credit {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 1.2rem;
+    font-size: 0.68rem;
+    opacity: 0.7;
+    margin: 0;
+    z-index: 1;
   }
   .breadcrumbs {
     font-size: 0.82rem;
@@ -114,7 +145,7 @@ const jsonLd = {
   }
   .episode-badge {
     display: inline-block;
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.35);
     padding: 0.3em 0.8em;
     border-radius: 999px;
     font-size: 0.78rem;
@@ -129,12 +160,13 @@ const jsonLd = {
   }
   .post-hero-desc {
     font-size: 1.08rem;
-    opacity: 0.92;
+    opacity: 0.95;
     max-width: 60ch;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   }
   .post-meta {
     font-size: 0.85rem;
-    opacity: 0.8;
+    opacity: 0.85;
     margin: 0;
   }
   .post-body {
