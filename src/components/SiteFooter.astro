@@ -1,12 +1,15 @@
 ---
+import NewsletterSignup from './NewsletterSignup.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
-    <div>
+    <div class="footer-brand">
       <p class="footer-logo">✈ TravelHackz</p>
       <p class="footer-tag">Real routes, real timing, travel guides with no fluff.</p>
+      <p class="footer-heading newsletter-heading">Get new guides by email</p>
+      <NewsletterSignup username="travelhackz" compact />
     </div>
     <div class="footer-links">
       <div>
@@ -14,6 +17,7 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href="/blog">All Posts</a></li>
           <li><a href="/istanbul-unpacked">Istanbul Unpacked Series</a></li>
+          <li><a href="/gallery">Gallery</a></li>
           <li><a href="/about">About</a></li>
         </ul>
       </div>
@@ -22,6 +26,13 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href="https://open.spotify.com/show/0340QAelnsERPiwoQESar3" target="_blank" rel="noopener">Spotify</a></li>
           <li><a href="https://podcasts.apple.com/us/podcast/istanbul-unpacked/id6797918576" target="_blank" rel="noopener">Apple Podcasts</a></li>
+          <li><a href="/rss.xml">RSS Feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">Legal</p>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
@@ -51,14 +62,21 @@ const year = new Date().getFullYear();
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
+  .footer-brand {
+    max-width: 320px;
+  }
   .footer-tag {
     color: var(--color-text-muted);
     max-width: 32ch;
-    margin: 0;
+    margin: 0 0 1.5rem;
+  }
+  .newsletter-heading {
+    margin-bottom: 0.6rem;
   }
   .footer-links {
     display: flex;
     gap: 3rem;
+    flex-wrap: wrap;
   }
   .footer-heading {
     font-weight: 700;

@@ -5,6 +5,7 @@ import PostCard from '../components/PostCard.astro';
 import SpotifyEmbed from '../components/SpotifyEmbed.astro';
 import AppleEmbed from '../components/AppleEmbed.astro';
 import KeepsmybagBanner from '../components/KeepsmybagBanner.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 
 const istanbulPosts = (
   await getCollection('blog', ({ data }) => data.series === 'Istanbul Unpacked' && !data.draft)
@@ -103,6 +104,17 @@ const turkeyPosts = (
         <SpotifyEmbed embedUrl="https://open.spotify.com/embed/show/0340QAelnsERPiwoQESar3" />
         <AppleEmbed embedUrl="https://embed.podcasts.apple.com/us/podcast/istanbul-unpacked/id6797918576" />
       </div>
+    </div>
+  </section>
+
+  <section class="container newsletter-section">
+    <div class="newsletter-card">
+      <div>
+        <p class="eyebrow">Newsletter</p>
+        <h2>New guides, straight to your inbox.</h2>
+        <p>No spam, no daily emails — just new posts as we publish them. Unsubscribe anytime.</p>
+      </div>
+      <NewsletterSignup username="travelhackz" />
     </div>
   </section>
 </BaseLayout>
@@ -221,6 +233,38 @@ const turkeyPosts = (
   @media (max-width: 720px) {
     .podcast-card {
       grid-template-columns: 1fr;
+    }
+  }
+  .newsletter-section {
+    padding: 0 0 4rem;
+  }
+  .newsletter-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    background: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--radius);
+    padding: 2rem 2.2rem;
+  }
+  .newsletter-card h2 {
+    margin: 0.2rem 0 0.4rem;
+    font-size: 1.4rem;
+  }
+  .newsletter-card p:not(.eyebrow) {
+    color: var(--color-text-muted);
+    margin: 0;
+    max-width: 42ch;
+  }
+  .newsletter-card :global(.newsletter-form) {
+    min-width: 320px;
+  }
+  @media (max-width: 640px) {
+    .newsletter-card :global(.newsletter-form) {
+      min-width: 0;
+      width: 100%;
     }
   }
 </style>

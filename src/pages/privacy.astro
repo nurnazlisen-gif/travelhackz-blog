@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lastUpdated = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(
+  new Date()
+);
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="What data TravelHackz collects, what it doesn't, and how the site's embeds, analytics and newsletter work."
+>
+  <section class="container page">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: {lastUpdated}</p>
+
+    <p class="lead">
+      TravelHackz is a small, independent travel blog. This page explains, in plain language,
+      what data touches this site and why.
+    </p>
+
+    <h2>Analytics</h2>
+    <p>
+      We use <a href="https://vercel.com/docs/analytics" target="_blank" rel="noopener">Vercel Web Analytics</a>
+      to understand which posts get read and roughly how many people visit. It's cookieless and doesn't
+      track you individually across other websites — it only reports aggregate numbers like page views
+      and referrers.
+    </p>
+
+    <h2>Embedded Players</h2>
+    <p>
+      Podcast episodes on this site are embedded directly from Spotify and Apple Podcasts. When you
+      interact with one of those players, Spotify or Apple may set their own cookies or collect data
+      according to their own privacy policies — that's outside our control. We only load the player
+      when you visit a page that has one; we don't add any tracking of our own on top of it.
+    </p>
+
+    <h2>Newsletter</h2>
+    <p>
+      If you subscribe to our newsletter, your email address is stored with our email provider,
+      <a href="https://buttondown.email" target="_blank" rel="noopener">Buttondown</a>, solely to send
+      you new posts and updates. We don't sell or share your email with anyone else. You can
+      unsubscribe at any time using the link in any email we send.
+    </p>
+
+    <h2>Partner Links</h2>
+    <p>
+      Some posts link to <a href="https://www.keepsmybag.com" target="_blank" rel="noopener">Keepsmybag</a>,
+      a luggage delivery service we mention because we think it's genuinely useful for travelers to
+      Istanbul. Clicking through takes you to their site, which has its own separate privacy policy —
+      we don't receive any personal data about what you do there.
+    </p>
+
+    <h2>What We Don't Do</h2>
+    <ul>
+      <li>We don't require an account or login to read the site.</li>
+      <li>We don't process payments or store financial information — TravelHackz doesn't sell anything directly.</li>
+      <li>We don't sell, rent, or share your data with advertisers.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy or your data? Email us at
+      <a href={`mailto:info.travelhackz@gmail.com`}>info.travelhackz@gmail.com</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding: 4rem 0 5rem;
+    max-width: 720px;
+  }
+  .updated {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-top: -0.5rem;
+  }
+  .lead {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
+</style>
