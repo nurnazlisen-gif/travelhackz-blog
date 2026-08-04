@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SpotifyEmbed from '../components/SpotifyEmbed.astro';
+---
+
+<BaseLayout
+  title="Podcast"
+  description="Listen to the TravelHackz podcast — 10-minute, no-fluff travel episodes, starting with Istanbul Unpacked."
+>
+  <section class="container page-header">
+    <p class="eyebrow">Podcast</p>
+    <h1>The TravelHackz Podcast</h1>
+    <p class="page-desc">
+      10 minutes an episode. Real routes, real timing, no filler — listen on the road, then come
+      back to the blog for the full written guide.
+    </p>
+  </section>
+
+  <section class="container listen-section">
+    <div class="listen-card">
+      <div>
+        <p class="eyebrow">Listen</p>
+        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">
+          Apple Podcasts
+        </a>
+      </div>
+      <SpotifyEmbed embedUrl="https://open.spotify.com/embed/show/0340QAelnsERPiwoQESar3" />
+    </div>
+  </section>
+
+  <section class="container season-card">
+    <div class="season-inner">
+      <div>
+        <p class="eyebrow">Season One</p>
+        <h2>Istanbul Unpacked</h2>
+        <p>
+          Eight episodes, one city, two continents — from your first 24 hours to your last day,
+          with the full written companion for every episode.
+        </p>
+      </div>
+      <a class="btn" href="/istanbul-unpacked">See the full series →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 4rem 0 1rem;
+    max-width: 720px;
+  }
+  .page-desc {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+  .listen-section {
+    padding: 1.5rem 0;
+  }
+  .listen-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+  }
+  @media (max-width: 640px) {
+    .listen-card {
+      grid-template-columns: 1fr;
+    }
+  }
+  .season-card {
+    padding: 1rem 0 4rem;
+  }
+  .season-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    background: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--radius);
+    padding: 1.8rem 2rem;
+  }
+  .season-inner p {
+    color: var(--color-text-muted);
+    max-width: 52ch;
+    margin: 0.4rem 0 0;
+  }
+  .season-inner h2 {
+    margin: 0;
+  }
+</style>

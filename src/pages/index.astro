@@ -18,9 +18,13 @@ const turkeyPosts = (
   title="TravelHackz — No-Fluff Travel Guides"
   description="Travel guides built on real routes, real timing and real prices, across Istanbul and the rest of Turkey."
 >
-  <section class="hero">
+  <section class="hero photo-cover">
+    <img
+      src="https://commons.wikimedia.org/wiki/Special:FilePath/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg?width=1600"
+      alt="Wide aerial view of Istanbul's historic peninsula with domed mosques beside the Bosphorus and the modern skyline beyond"
+    />
     <div class="container hero-inner">
-      <p class="eyebrow">Welcome to TravelHackz</p>
+      <p class="eyebrow hero-eyebrow">Welcome to TravelHackz</p>
       <h1>No-fluff travel guides, timed to the hour.</h1>
       <p class="hero-desc">
         Real routes, real timing and real prices instead of generic advice — covering{' '}
@@ -28,9 +32,14 @@ const turkeyPosts = (
       </p>
       <div class="hero-actions">
         <a class="btn" href="/istanbul-unpacked">Istanbul Unpacked Series</a>
-        <a class="btn btn-outline" href="/blog">All Posts</a>
+        <a class="btn btn-outline-white" href="/blog">All Posts</a>
       </div>
     </div>
+    <p class="hero-credit">Photo by Hunanuk / Wikimedia Commons (CC0)</p>
+  </section>
+
+  <section class="container banner-section">
+    <KeepsmybagBanner />
   </section>
 
   <section class="container featured">
@@ -55,10 +64,6 @@ const turkeyPosts = (
         />
       ))}
     </div>
-  </section>
-
-  <section class="container banner-section">
-    <KeepsmybagBanner />
   </section>
 
   <section class="container featured">
@@ -104,20 +109,31 @@ const turkeyPosts = (
 
 <style>
   .hero {
-    padding: 4rem 0 3rem;
-    border-bottom: 1px solid var(--color-border);
+    color: #fff;
+    padding: 4.5rem 0 3.5rem;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
   }
   .hero-inner {
     max-width: 760px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    color: #fff;
+    opacity: 0.9;
   }
   .hero h1 {
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     margin: 0.4rem 0 1rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
   }
   .hero-desc {
     font-size: 1.15rem;
-    color: var(--color-text-muted);
+    opacity: 0.95;
     max-width: 62ch;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   }
   .hero-actions {
     display: flex;
@@ -125,11 +141,37 @@ const turkeyPosts = (
     margin-top: 1.5rem;
     flex-wrap: wrap;
   }
-  .featured {
-    padding: 3rem 0 1rem;
+  .btn-outline-white {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid #fff;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75em 1.4em;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .btn-outline-white:hover {
+    background: #fff;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .hero-credit {
+    position: absolute;
+    bottom: 0.6rem;
+    right: 1.2rem;
+    font-size: 0.68rem;
+    color: #fff;
+    opacity: 0.7;
+    margin: 0;
+    z-index: 1;
   }
   .banner-section {
-    padding: 1rem 0;
+    padding: 1.75rem 0 0.5rem;
+  }
+  .featured {
+    padding: 3rem 0 1rem;
   }
   .section-heading {
     display: flex;

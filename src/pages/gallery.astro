@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const photos = [
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg?width=1200',
+    alt: "Wide aerial view of Istanbul's historic peninsula with domed mosques beside the Bosphorus and the modern skyline beyond",
+    caption: 'Istanbul skyline',
+    credit: 'Hunanuk / Wikimedia Commons (CC0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sultan_Ahmed_Mosque_and_Hagia_Sophia_by_sun_down.JPG?width=1200',
+    alt: 'Silhouettes of the Blue Mosque and Hagia Sophia domes and minarets against an orange sunset sky',
+    caption: 'Sultanahmet at sunset',
+    credit: 'Dickelbers / Wikimedia Commons (CC BY-SA 3.0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_Bosphorus_ferry.jpg?width=1200',
+    alt: 'A passenger ferry crossing the Bosphorus strait in Istanbul',
+    caption: 'Bosphorus ferry',
+    credit: 'John Lubbock / Wikimedia Commons (CC BY-SA 3.0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sunset_over_Istanbul_from_the_Galata_Bridge.jpg?width=1200',
+    alt: 'Golden-hour view over the Golden Horn from Galata Bridge with the Fatih Mosque in the distance',
+    caption: 'Golden Horn, golden hour',
+    credit: 'Joseph Kranak / Wikimedia Commons (CC BY 2.0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Balik_ekmek_Galata_Bridge.JPG?width=1200',
+    alt: 'A grilled fish sandwich (balık ekmek) served from a vendor boat near Galata Bridge',
+    caption: 'Balık ekmek at Eminönü',
+    credit: 'Benreis / Wikimedia Commons (CC BY 3.0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_asv2021-11_img43_Grand_Bazaar.jpg?width=1200',
+    alt: "A vaulted stone corridor lined with shops inside Istanbul's Grand Bazaar",
+    caption: 'Inside the Grand Bazaar',
+    credit: 'A.Savin / Wikimedia Commons (Free Art License)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_by_Night_-_2014.10.23_(58).JPG?width=1200',
+    alt: "Fishermen silhouetted along Galata Bridge's railing at night with city lights behind them",
+    caption: 'Night fishing on Galata Bridge',
+    credit: 'Derzsi Elekes Andor / Wikimedia Commons (CC BY-SA 4.0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Carriages_in_Bujukada.jpg?width=1200',
+    alt: 'Horse-drawn carriages (faytons) lined up on a street in Büyükada',
+    caption: 'Horse carriages on Büyükada',
+    credit: 'Dada / Wikimedia Commons (CC BY-SA 4.0)',
+  },
+  {
+    src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Istanbul_Airport_inside_hall.jpg?width=1200',
+    alt: "Wide interior hall of Istanbul Airport's departure area with high ceilings",
+    caption: 'Istanbul Airport',
+    credit: 'Niels Elgaard Larsen / Wikimedia Commons (CC BY-SA 4.0)',
+  },
+];
+---
+
+<BaseLayout
+  title="Gallery"
+  description="A photo gallery of Istanbul — the Bosphorus, the Old City, street food and more."
+>
+  <section class="container page-header">
+    <p class="eyebrow">Gallery</p>
+    <h1>Istanbul, in pictures.</h1>
+    <p class="page-desc">A few of the sights, streets and meals behind the Istanbul Unpacked series.</p>
+  </section>
+
+  <section class="container gallery-grid">
+    {photos.map((photo) => (
+      <figure class="gallery-item">
+        <div class="gallery-photo">
+          <img src={photo.src} alt={photo.alt} loading="lazy" />
+        </div>
+        <figcaption>
+          <span class="caption-title">{photo.caption}</span>
+          <span class="caption-credit">{photo.credit}</span>
+        </figcaption>
+      </figure>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: 4rem 0 1rem;
+    max-width: 720px;
+  }
+  .page-desc {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.3rem;
+    padding: 1.5rem 0 4rem;
+  }
+  .gallery-item {
+    margin: 0;
+  }
+  .gallery-photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--color-bg-alt);
+  }
+  .gallery-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+  .gallery-item:hover .gallery-photo img {
+    transform: scale(1.04);
+  }
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-top: 0.6rem;
+  }
+  .caption-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+  .caption-credit {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+</style>

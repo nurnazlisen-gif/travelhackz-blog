@@ -3,6 +3,8 @@ const nav = [
   { href: '/', label: 'Home' },
   { href: '/blog', label: 'Blog' },
   { href: '/istanbul-unpacked', label: 'Istanbul Unpacked' },
+  { href: '/podcast', label: 'Podcast' },
+  { href: '/gallery', label: 'Gallery' },
   { href: '/about', label: 'About' },
 ];
 const currentPath = Astro.url.pathname;
@@ -65,15 +67,17 @@ const currentPath = Astro.url.pathname;
   }
   nav ul {
     display: flex;
-    gap: 1.6rem;
+    gap: 1.3rem;
     list-style: none;
     margin: 0;
     padding: 0;
+    flex-wrap: wrap;
   }
   nav a {
     color: var(--color-text);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
+    white-space: nowrap;
   }
   nav a:hover {
     color: var(--color-primary);
