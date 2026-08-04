@@ -1,0 +1,76 @@
+---
+---
+
+<div class="kmb-banner">
+  <div class="kmb-icon" aria-hidden="true">🧳</div>
+  <div class="kmb-copy">
+    <p class="kmb-eyebrow">Partner</p>
+    <h2>Landing in Istanbul? Skip the luggage hassle.</h2>
+    <p class="kmb-desc">
+      Keepsmybag picks up your bags at IST or SAW and delivers them straight to your hotel —
+      verified couriers, insured, tracked by QR code. You walk out of the airport hands-free.
+    </p>
+  </div>
+  <div class="kmb-actions">
+    <a class="btn" href="https://www.keepsmybag.com" target="_blank" rel="noopener">
+      Book with Keepsmybag →
+    </a>
+    <a class="kmb-link" href="/luggage-delivery">How it works</a>
+  </div>
+</div>
+
+<style>
+  .kmb-banner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.8rem;
+    background: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--radius);
+    padding: 1.8rem 2rem;
+  }
+  .kmb-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+  }
+  .kmb-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin: 0 0 0.3rem;
+  }
+  .kmb-copy h2 {
+    font-size: 1.3rem;
+    margin: 0 0 0.4rem;
+  }
+  .kmb-desc {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    max-width: 52ch;
+  }
+  .kmb-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+  .kmb-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-secondary);
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .kmb-banner {
+      grid-template-columns: 1fr;
+      text-align: left;
+    }
+    .kmb-actions {
+      align-items: flex-start;
+    }
+  }
+</style>
