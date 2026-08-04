@@ -4,12 +4,15 @@ interface Props {
   linkText: string;
   href?: string;
 }
-const { text, linkText, href = '/luggage-delivery' } = Astro.props;
+const { text, linkText, href = 'https://www.keepsmybag.com' } = Astro.props;
+const isExternal = href.startsWith('http');
 ---
 
 <div class="cta-box">
   <p>{text}</p>
-  <a class="btn" href={href}>{linkText} →</a>
+  <a class="btn" href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener' : undefined}>
+    {linkText} →
+  </a>
 </div>
 
 <style>

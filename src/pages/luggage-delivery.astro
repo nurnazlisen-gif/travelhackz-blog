@@ -4,13 +4,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Luggage Delivery — Hands Free, Day Full"
-  description="Why luggage delivery between the airport and your hotel works, when you need it, and how it works."
+  description="Why luggage delivery between the airport and your hotel works, when you need it, and how it works with Keepsmybag."
 >
   <section class="container page">
     <p class="eyebrow">Practical Info</p>
     <h1>Spend your day with the city, not your suitcase.</h1>
     <p class="lead">
-      The luggage delivery services we mention throughout the Istanbul Unpacked series move
+      The luggage delivery service we mention throughout the Istanbul Unpacked series moves
       your suitcase between the airport and your hotel (in either direction) with verified,
       insured couriers. Everything is tracked by QR code, so you get those hours back in the
       city instead.
@@ -30,11 +30,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       location. Delivery services let you keep your route one-way.
     </p>
 
-    <div class="note">
-      <p>
-        This page gives general context on services like <strong>Keepsmybag</strong>, mentioned
-        throughout the series. Reach out if you'd like the current booking link added here.
-      </p>
+    <div class="cta-panel">
+      <div>
+        <p class="cta-title">Keepsmybag</p>
+        <p class="cta-desc">
+          Verified, insured couriers, door-to-door between IST/SAW and your hotel, tracked by
+          QR code the whole way.
+        </p>
+      </div>
+      <a class="btn" href="https://www.keepsmybag.com" target="_blank" rel="noopener">
+        Book with Keepsmybag →
+      </a>
     </div>
   </section>
 </BaseLayout>
@@ -48,14 +54,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: 1.15rem;
     color: var(--color-text-muted);
   }
-  .note {
-    background: var(--color-bg-alt);
+  .cta-panel {
+    background: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
     border-radius: var(--radius);
-    padding: 1.2rem 1.4rem;
-    margin-top: 2rem;
-    font-size: 0.95rem;
+    padding: 1.4rem 1.6rem;
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
   }
-  .note p {
+  .cta-title {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .cta-desc {
     margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    max-width: 40ch;
   }
 </style>
