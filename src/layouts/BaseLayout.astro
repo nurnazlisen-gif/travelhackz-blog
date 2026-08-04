@@ -1,6 +1,7 @@
 ---
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 
 interface Props {
@@ -10,8 +11,12 @@ interface Props {
   type?: 'website' | 'article';
 }
 
-const { title, description, type = 'website' } = Astro.props;
+const DEFAULT_IMAGE =
+  'https://commons.wikimedia.org/wiki/Special:FilePath/Historical_peninsula_and_modern_skyline_of_Istanbul.jpg?width=1200';
+
+const { title, description, image = DEFAULT_IMAGE, type = 'website' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const imageURL = new URL(image, Astro.site);
 const siteName = 'TravelHackz';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 ---
@@ -33,10 +38,12 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={imageURL} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
 
     <slot name="head" />
   </head>
@@ -46,5 +53,6 @@ const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
       <slot />
     </main>
     <SiteFooter />
+    <Analytics />
   </body>
 </html>

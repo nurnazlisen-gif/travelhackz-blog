@@ -11,11 +11,15 @@ interface Props {
 }
 
 const { slug, title, description, heroImage, heroImageAlt, heroLabel, episode, destination } = Astro.props;
+
+// Cards render small (~280px) — request a smaller version from Wikimedia's
+// resizing service instead of shipping the same 1600px file used in hero banners.
+const thumbnailSrc = heroImage.replace(/width=\d+/, 'width=480');
 ---
 
 <a href={`/blog/${slug}`} class="card">
   <div class="card-hero photo-cover">
-    <img src={heroImage} alt={heroImageAlt} loading="lazy" />
+    <img src={thumbnailSrc} alt={heroImageAlt} loading="lazy" decoding="async" width="480" height="360" />
     {episode && <span class="card-episode">Episode {episode}</span>}
     <span class="card-hero-label">{heroLabel ?? destination}</span>
   </div>
