@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="Who is TravelHackz? A travel blog and podcast built on practical, no-fluff guides."
+>
+  <section class="container page">
+    <p class="eyebrow">About</p>
+    <h1>Practical travel advice, not generic top-10 lists.</h1>
+    <p class="lead">
+      TravelHackz goes beyond "best 10 places" lists. Every post answers a specific question:{' '}
+      <em>what time should I go, how much will it cost, and in what order should I do it?</em>
+    </p>
+    <p>
+      Our first series, <a href="/istanbul-unpacked">Istanbul Unpacked</a>, is the written
+      companion to our podcast of the same name — an 8-episode guide that walks through
+      Istanbul from arrival to your last day, with real timing and real prices. More
+      destinations and series are coming.
+    </p>
+    <p>
+      Questions, suggestions, or partnership ideas? Reach us at
+      <a href={`mailto:hello@travelhackz.online`}>hello@travelhackz.online</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding: 4rem 0 5rem;
+    max-width: 720px;
+  }
+  .lead {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+  }
+</style>

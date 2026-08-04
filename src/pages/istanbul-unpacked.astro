@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog', ({ data }) => data.series === 'Istanbul Unpacked' && !data.draft)).sort(
+  (a, b) => (a.data.episode ?? 0) - (b.data.episode ?? 0)
+);
+---
+
+<BaseLayout
+  title="Istanbul Unpacked — The Full 8-Episode Series"
+  description="Every episode of the Istanbul Unpacked podcast, written out in full: arrival to last day, budget to itineraries."
+>
+  <section class="hub-hero gradient-bosphorus">
+    <div class="container">
+      <p class="eyebrow" style="color:#dceae7">Podcast Series</p>
+      <h1>Istanbul Unpacked</h1>
+      <p class="hub-desc">
+        The full written guides behind our 8-episode, 10-minutes-per-episode podcast for
+        travelers. From your first 24 hours to the right order for Sultanahmet, the split
+        between Istanbul's two continents, and how to win your last day — everything you need
+        to actually live the city, not just visit it.
+      </p>
+      <div class="hub-actions">
+        <a class="btn" href="https://open.spotify.com" target="_blank" rel="noopener">Listen on Spotify</a>
+        <a class="btn btn-outline-white" href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container episode-list">
+    <ol>
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}`} class="episode-row">
+            <span class="episode-number">{String(post.data.episode).padStart(2, '0')}</span>
+            <span class="episode-info">
+              <strong>{post.data.title}</strong>
+              <span>{post.data.description}</span>
+            </span>
+            <span class="episode-arrow">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .hub-hero {
+    color: #fff;
+    padding: 4rem 0;
+  }
+  .hub-desc {
+    max-width: 65ch;
+    font-size: 1.1rem;
+    opacity: 0.92;
+  }
+  .hub-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .btn-outline-white {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid #fff;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75em 1.4em;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .btn-outline-white:hover {
+    background: #fff;
+    color: var(--color-secondary);
+    text-decoration: none;
+  }
+  .episode-list {
+    padding: 3rem 0 4rem;
+  }
+  .episode-list ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .episode-row {
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    color: var(--color-text);
+  }
+  .episode-row:hover {
+    text-decoration: none;
+    border-color: var(--color-primary);
+  }
+  .episode-number {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    min-width: 2.4ch;
+  }
+  .episode-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+  }
+  .episode-info span {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+  .episode-arrow {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+</style>

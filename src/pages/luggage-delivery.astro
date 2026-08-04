@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Luggage Delivery — Hands Free, Day Full"
+  description="Why luggage delivery between the airport and your hotel works, when you need it, and how it works."
+>
+  <section class="container page">
+    <p class="eyebrow">Practical Info</p>
+    <h1>Spend your day with the city, not your suitcase.</h1>
+    <p class="lead">
+      The luggage delivery services we mention throughout the Istanbul Unpacked series move
+      your suitcase between the airport and your hotel (in either direction) with verified,
+      insured couriers. Everything is tracked by QR code, so you get those hours back in the
+      city instead.
+    </p>
+
+    <h2>When does it actually help?</h2>
+    <ul>
+      <li>You land early in the morning and your hotel check-in isn't until the afternoon.</li>
+      <li>You've checked out but your flight isn't until evening — you want that "limbo" time back.</li>
+      <li>You're splitting your stay (say, Europe side + Kadıköy) and don't want to haul a suitcase between hotels.</li>
+      <li>You're staying in an Airbnb and your host has nowhere to store bags.</li>
+    </ul>
+
+    <h2>Alternatives</h2>
+    <p>
+      Hotel/Airbnb storage and airport left-luggage counters work too, but they tie you to one
+      location. Delivery services let you keep your route one-way.
+    </p>
+
+    <div class="note">
+      <p>
+        This page gives general context on services like <strong>Keepsmybag</strong>, mentioned
+        throughout the series. Reach out if you'd like the current booking link added here.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding: 4rem 0 5rem;
+    max-width: 720px;
+  }
+  .lead {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+  }
+  .note {
+    background: var(--color-bg-alt);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+  }
+  .note p {
+    margin: 0;
+  }
+</style>

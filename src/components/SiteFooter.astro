@@ -1,0 +1,90 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-logo">✈ TravelHackz</p>
+      <p class="footer-tag">Real routes, real timing, travel guides with no fluff.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <p class="footer-heading">Explore</p>
+        <ul>
+          <li><a href="/blog">All Posts</a></li>
+          <li><a href="/istanbul-unpacked">Istanbul Unpacked Series</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-heading">Podcast</p>
+        <ul>
+          <li><a href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a></li>
+          <li><a href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <p class="copyright">© {year} TravelHackz. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-alt);
+    margin-top: 5rem;
+    padding-top: 3rem;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+  }
+  .footer-logo {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .footer-tag {
+    color: var(--color-text-muted);
+    max-width: 32ch;
+    margin: 0;
+  }
+  .footer-links {
+    display: flex;
+    gap: 3rem;
+  }
+  .footer-heading {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+  }
+  .footer-links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer-links a {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+  .footer-links a:hover {
+    color: var(--color-primary);
+  }
+  .copyright {
+    border-top: 1px solid var(--color-border);
+    padding: 1.25rem 0;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+</style>

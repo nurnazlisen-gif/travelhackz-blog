@@ -1,0 +1,76 @@
+---
+interface Item {
+  question: string;
+  answer: string;
+}
+interface Props {
+  items: Item[];
+}
+const { items } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+---
+
+{items.length > 0 && (
+  <section class="faq" aria-labelledby="faq-heading">
+    <h2 id="faq-heading">Frequently Asked Questions</h2>
+    <div class="faq-list">
+      {items.map((item) => (
+        <details>
+          <summary>{item.question}</summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </section>
+)}
+
+<style>
+  .faq {
+    margin: 3rem 0;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  details {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 700;
+    font-family: var(--font-serif);
+    font-size: 1.02rem;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::before {
+    content: '+ ';
+    color: var(--color-primary);
+  }
+  details[open] summary::before {
+    content: '– ';
+  }
+  details p {
+    margin: 0.75rem 0 0;
+    color: var(--color-text-muted);
+  }
+</style>

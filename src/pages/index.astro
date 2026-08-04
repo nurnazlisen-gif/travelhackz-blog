@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => (a.data.episode ?? 99) - (b.data.episode ?? 99)
+);
+const featured = posts.slice(0, 6);
+---
+
+<BaseLayout
+  title="TravelHackz — No-Fluff Travel Guides"
+  description="Travel guides built on real routes, real timing and real prices. Starting with the Istanbul Unpacked series."
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Welcome to TravelHackz</p>
+      <h1>No-fluff travel guides, timed to the hour.</h1>
+      <p class="hero-desc">
+        Real routes, real timing and real prices instead of generic advice. We're starting with{' '}
+        <strong>Istanbul Unpacked</strong> — the written companion to our 8-episode podcast.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="/istanbul-unpacked">Explore the Istanbul Unpacked Series</a>
+        <a class="btn btn-outline" href="/blog">All Posts</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container featured">
+    <div class="section-heading">
+      <h2>Featured Posts</h2>
+      <a href="/blog">See all →</a>
+    </div>
+    <div class="grid">
+      {featured.map((post) => (
+        <PostCard
+          slug={post.id}
+          title={post.data.title}
+          description={post.data.description}
+          heroGradient={post.data.heroGradient}
+          heroLabel={post.data.heroLabel}
+          episode={post.data.episode}
+          destination={post.data.destination}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="podcast-strip">
+    <div class="container podcast-inner">
+      <div>
+        <p class="eyebrow">Podcast</p>
+        <h2>Same guides, in your ears.</h2>
+        <p>Every episode runs 10 minutes. Listen on the road, then come back here for the full detail.</p>
+      </div>
+      <div class="podcast-links">
+        <a class="btn btn-outline" href="https://open.spotify.com" target="_blank" rel="noopener">Spotify</a>
+        <a class="btn btn-outline" href="https://podcasts.apple.com" target="_blank" rel="noopener">Apple Podcasts</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(180deg, var(--color-bg-alt), var(--color-bg));
+    padding: 4.5rem 0 3.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .hero-inner {
+    max-width: 760px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin: 0.4rem 0 1rem;
+  }
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 62ch;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .featured {
+    padding: 4rem 0 2rem;
+  }
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+  }
+  .section-heading h2 {
+    margin: 0;
+  }
+  .section-heading a {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .podcast-strip {
+    background: var(--color-secondary);
+    color: #fff;
+    margin-top: 3rem;
+  }
+  .podcast-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 3rem 0;
+  }
+  .podcast-inner .eyebrow {
+    color: var(--color-secondary-light);
+  }
+  .podcast-inner h2 {
+    margin: 0.3rem 0 0.6rem;
+  }
+  .podcast-inner p {
+    margin: 0;
+    max-width: 46ch;
+    opacity: 0.9;
+  }
+  .podcast-links {
+    display: flex;
+    gap: 1rem;
+  }
+  .podcast-links .btn-outline {
+    color: #fff;
+    border-color: #fff;
+  }
+  .podcast-links .btn-outline:hover {
+    background: #fff;
+    color: var(--color-secondary);
+  }
+</style>

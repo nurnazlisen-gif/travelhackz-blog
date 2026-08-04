@@ -1,0 +1,211 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FaqSection from '../components/FaqSection.astro';
+import CtaBox from '../components/CtaBox.astro';
+
+interface Props {
+  post: {
+    id: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      updatedDate?: Date;
+      series?: string;
+      episode?: number;
+      destination: string;
+      primaryKeyword: string;
+      secondaryKeywords: string[];
+      heroGradient: string;
+      heroLabel?: string;
+      faq: { question: string; answer: string }[];
+    };
+  };
+  prevPost?: { id: string; data: { title: string } } | null;
+  nextPost?: { id: string; data: { title: string } } | null;
+}
+
+const { post, prevPost = null, nextPost = null } = Astro.props;
+const { title, description, pubDate, updatedDate, series, episode, destination, heroGradient, heroLabel, faq } =
+  post.data;
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Organization', name: 'TravelHackz' },
+  publisher: { '@type': 'Organization', name: 'TravelHackz' },
+};
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </Fragment>
+
+  <div class={`post-hero ${heroGradient}`}>
+    <div class="container post-hero-inner">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <a href="/blog">Blog</a>
+        {series && <> / <a href="/istanbul-unpacked">{series}</a></>}
+      </nav>
+      {episode && <span class="episode-badge">{series} · Episode {episode}</span>}
+      <h1>{title}</h1>
+      <p class="post-hero-desc">{description}</p>
+      <p class="post-meta">
+        {destination} · {dateFormatter.format(pubDate)}
+      </p>
+    </div>
+  </div>
+
+  <article class="container post-body">
+    <slot />
+
+    <FaqSection items={faq} />
+
+    <CtaBox
+      text="Don't waste your day babysitting a suitcase — see how door-to-door luggage delivery with Keepsmybag works between the airport and your hotel."
+      linkText="Learn about luggage delivery"
+    />
+
+    <p class="podcast-note">
+      🎧 This post is the written companion to {episode ? `Episode ${episode}` : 'an episode'} of <strong>Istanbul Unpacked</strong>. Find the podcast on Spotify and Apple Podcasts.
+    </p>
+
+    {(prevPost || nextPost) && (
+      <nav class="series-nav" aria-label="Series navigation">
+        {prevPost ? (
+          <a class="series-nav-link" href={`/blog/${prevPost.id}`}>
+            <span>← Previous Episode</span>
+            <strong>{prevPost.data.title}</strong>
+          </a>
+        ) : <span />}
+        {nextPost ? (
+          <a class="series-nav-link align-right" href={`/blog/${nextPost.id}`}>
+            <span>Next Episode →</span>
+            <strong>{nextPost.data.title}</strong>
+          </a>
+        ) : <span />}
+      </nav>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .post-hero {
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+  .post-hero-inner {
+    max-width: 760px;
+  }
+  .breadcrumbs {
+    font-size: 0.82rem;
+    opacity: 0.85;
+    margin-bottom: 1rem;
+  }
+  .breadcrumbs a {
+    color: #fff;
+  }
+  .episode-badge {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.9rem;
+  }
+  .post-hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 0.6rem;
+  }
+  .post-hero-desc {
+    font-size: 1.08rem;
+    opacity: 0.92;
+    max-width: 60ch;
+  }
+  .post-meta {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin: 0;
+  }
+  .post-body {
+    max-width: 760px;
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+    font-size: 1.05rem;
+  }
+  .post-body :global(h2) {
+    font-size: 1.5rem;
+    margin-top: 2.2rem;
+  }
+  .post-body :global(h3) {
+    font-size: 1.2rem;
+    margin-top: 1.6rem;
+  }
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: 1.3em;
+  }
+  .post-body :global(li) {
+    margin-bottom: 0.4em;
+  }
+  .podcast-note {
+    background: var(--color-bg-alt);
+    border-radius: var(--radius);
+    padding: 1rem 1.3rem;
+    font-size: 0.95rem;
+  }
+  .series-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .series-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    max-width: 45%;
+    color: var(--color-text);
+  }
+  .series-nav-link:hover {
+    text-decoration: none;
+  }
+  .series-nav-link:hover strong {
+    text-decoration: underline;
+  }
+  .series-nav-link span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .align-right {
+    text-align: right;
+    margin-left: auto;
+    align-items: flex-end;
+  }
+  @media (max-width: 640px) {
+    .series-nav {
+      flex-direction: column;
+    }
+    .series-nav-link,
+    .align-right {
+      max-width: 100%;
+      text-align: left;
+      align-items: flex-start;
+    }
+  }
+</style>

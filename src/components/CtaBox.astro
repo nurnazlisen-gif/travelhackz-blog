@@ -1,0 +1,35 @@
+---
+interface Props {
+  text: string;
+  linkText: string;
+  href?: string;
+}
+const { text, linkText, href = '/luggage-delivery' } = Astro.props;
+---
+
+<div class="cta-box">
+  <p>{text}</p>
+  <a class="btn" href={href}>{linkText} →</a>
+</div>
+
+<style>
+  .cta-box {
+    background: var(--color-secondary-light);
+    border: 1px solid var(--color-secondary);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.5rem;
+    margin: 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .cta-box p {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-text);
+    flex: 1;
+    min-width: 220px;
+  }
+</style>

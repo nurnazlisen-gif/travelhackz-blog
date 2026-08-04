@@ -1,0 +1,96 @@
+---
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/istanbul-unpacked', label: 'Istanbul Unpacked' },
+  { href: '/about', label: 'About' },
+];
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">✈</span>
+      <span>TravelHackz</span>
+    </a>
+    <nav aria-label="Main menu">
+      <ul>
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={currentPath === item.href ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(6px);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+  }
+  .logo {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .logo:hover {
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+  .logo-mark {
+    color: var(--color-primary);
+  }
+  nav ul {
+    display: flex;
+    gap: 1.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  nav a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  nav a[aria-current='page'] {
+    color: var(--color-primary);
+  }
+  @media (max-width: 640px) {
+    .header-inner {
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    nav ul {
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>
