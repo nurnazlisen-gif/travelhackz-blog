@@ -65,7 +65,7 @@ const jsonLd = {
   </Fragment>
 
   <div class="post-hero photo-cover">
-    <Image src={heroImage} alt={heroImageAlt} width={1600} />
+    <Image src={heroImage} alt={heroImageAlt} width={1600} loading="eager" fetchpriority="high" />
     <div class="container post-hero-inner">
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a> / <a href="/blog">Blog</a>

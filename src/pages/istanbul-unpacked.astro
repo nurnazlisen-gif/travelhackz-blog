@@ -20,6 +20,8 @@ const posts = (await getCollection('blog', ({ data }) => data.series === 'Istanb
       src={istanbulSkyline}
       alt="Wide aerial view of Istanbul's historic peninsula with domed mosques beside the Bosphorus and the modern skyline beyond"
       width={1600}
+      loading="eager"
+      fetchpriority="high"
     />
     <div class="container hub-hero-inner">
       <p class="eyebrow" style="color:#fff">Podcast Series</p>
