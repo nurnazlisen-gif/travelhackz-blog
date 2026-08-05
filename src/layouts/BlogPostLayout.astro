@@ -57,11 +57,30 @@ const jsonLd = {
   author: { '@type': 'Organization', name: 'TravelHackz' },
   publisher: { '@type': 'Organization', name: 'TravelHackz' },
 };
+
+const breadcrumbTrail = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  ...(series ? [{ name: series, url: '/istanbul-unpacked' }] : []),
+  { name: title, url: `/blog/${post.id}` },
+];
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbTrail.map((crumb, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: crumb.name,
+    item: new URL(crumb.url, Astro.site).toString(),
+  })),
+};
 ---
 
 <BaseLayout title={title} description={description} image={heroImage} type="article">
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
   </Fragment>
 
   <div class="post-hero photo-cover">

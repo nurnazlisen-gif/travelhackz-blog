@@ -16,14 +16,22 @@ interface Props {
 
 const { title, description, image, type = 'website' } = Astro.props;
 
+// Social platforms (WhatsApp, iMessage, older Facebook/LinkedIn crawlers) don't
+// reliably render WebP previews, so the share image is forced to JPEG at the
+// standard 1200x630 (1.91:1) og:image ratio regardless of the source image's shape.
 let resolvedImagePath: string;
 if (image && typeof image !== 'string') {
-  const optimized = await getImage({ src: image, width: 1200 });
+  const optimized = await getImage({ src: image, width: 1200, height: 630, format: 'jpg' });
   resolvedImagePath = optimized.src;
 } else if (image) {
   resolvedImagePath = image;
 } else {
-  const optimizedDefault = await getImage({ src: defaultOgImageSrc, width: 1200 });
+  const optimizedDefault = await getImage({
+    src: defaultOgImageSrc,
+    width: 1200,
+    height: 630,
+    format: 'jpg',
+  });
   resolvedImagePath = optimizedDefault.src;
 }
 
@@ -34,6 +42,22 @@ const suffixed = `${title} | ${siteName}`;
 // Only brand-suffix short titles — appending " | TravelHackz" to an
 // already-long post title just pushes it past Google's ~60-char SERP cutoff.
 const fullTitle = title.includes(siteName) ? title : suffixed.length <= 60 ? suffixed : title;
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: new URL('/', Astro.site).toString(),
+  logo: new URL('/icon-512.png', Astro.site).toString(),
+  sameAs: ['https://www.instagram.com/travelhackz.online/'],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  url: new URL('/', Astro.site).toString(),
+};
 ---
 
 <!doctype html>
@@ -66,6 +90,9 @@ const fullTitle = title.includes(siteName) ? title : suffixed.length <= 60 ? suf
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageURL} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
 
     <slot name="head" />
   </head>
